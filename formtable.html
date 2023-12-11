@@ -1,0 +1,153 @@
+<html>
+    <head>
+        <script src="./country-states.js"></script>
+        
+    </head>
+    <body onload="displayCountries()">
+        <div>
+        <form onsubmit="displayTable()">
+            <div>
+            <label> First Name :</label> <input type="text" id="fname" class="fname" />
+            </div>
+            <div>
+              <label>Last Name :</label> <input type="text" id="lname" class="lname" />
+            </div>
+            <div>
+                <label>Address :</label> <input type="textArea" id="addr" class="addr" />
+            </div>
+            <div>
+                <label>PinCode :</label> <input type="text" id="pin" class="pin" />
+            </div>
+            <div>
+                <label>Gender :</label> <select name="Gender" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+            </div>
+            <div>
+                <label>Choice of Food :</label> <select name="food" id="food" onclick="getFoodChoice()">
+                    <option value="South Indian">South Indian</option>
+                    <option value="North Indian">North Indian</option>
+                    <option value="NorthEast Indian">North East Indian</option>
+                    <option value="Punjabi Food">Punjabi Food</option>
+                    <option value="Rajasthani Food">Rajasthani Food</option>
+                </select>
+            </div>
+            <div>
+                <label>Country :</label><select id="country" class="country" onclick="selectCountry()">
+                    <option>Select Country</option>
+                </select>
+            </div>
+            <div>
+                <label>State :</label><select id="state" class="state" onclick="displayStates()">
+                    <option>Select State</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit"> Register</button>
+                </select>
+            </div>
+        </form>
+        </div>
+        <script>
+
+            
+          
+            function getFoodChoice(){
+                var selectFood = document.querySelector('#food');
+        
+             console.log("Selected Option"+document.querySelector('#food').value);
+            }
+
+            function selectCountry(){
+                var stateOption='';
+                var countryidforstates=[];
+                var scountry = document.querySelector('#country');
+                var selectedcountryid='';
+            console.log(scountry.value);
+            const country_obj_for_states = country_and_states.country;
+            const state_obj = country_and_states.states;
+            for(let countryid in country_obj_for_states){
+                 if(scountry.value===country_obj_for_states[countryid]){
+               selectedcountryid=countryid;
+                 }
+            }
+           var stateinfo=[];
+            for(let cid in state_obj){
+                if(selectedcountryid===cid){
+               for(var z=0;z<state_obj[cid].length;z++){
+                stateOption += '<option value="'+state_obj[cid][z].name+'">'+state_obj[cid][z].name+'</option>'
+               }
+                }
+               }
+               document.getElementById("state").innerHTML =stateOption;
+            }
+        
+             function displayCountries(){
+              //js logic
+             var countryOption='';
+              const country_obj = country_and_states.country;
+    
+               for(let i in country_obj){
+            countryOption +='<option id="'+i+'">'+country_obj[i]+'</option>';
+               }
+               document.getElementById("country").innerHTML =countryOption;
+              //console.log(id_country_option.innerHTML);
+              //console.log("Children Length"+document.getElementById("country").children.length) ;
+             var selectElement = document.querySelector('#country');
+        
+             console.log("Selected Option"+selectElement.value);
+}
+function displayStates(){
+              //js logic
+              var selectedstate = document.querySelector('#state');
+            console.log(selectedstate.value);
+} 
+
+function displayTable(){
+    event.preventDefault();
+    const row1=['FirstName','LastName','Address','Pincode','Gender','ChoiceofFood','Country','State'];
+    var resrow=[];
+    resrow.push(document.getElementById('fname').value);
+    resrow.push(document.getElementById('lname').value);
+    resrow.push(document.getElementById('addr').value);
+    resrow.push(document.getElementById('pin').value);
+    resrow.push(document.getElementById('gender').value);
+    resrow.push(document.getElementById('food').value);
+    resrow.push(document.getElementById('country').value);
+    resrow.push(document.getElementById('state').value);
+    
+
+    const tbl = document.createElement("table");
+  const tblBody = document.createElement("tbody");
+
+  
+  for (let i = 0; i < 2; i++) {
+    const row = document.createElement("tr");
+for (let j = 0; j < 8; j++) {
+      const cell = document.createElement("td");
+      if(i==0){
+        cell.appendChild(document.createTextNode(row1[j]));
+        cell.style.fontWeight="bold";
+      }
+      else{
+        cell.appendChild(document.createTextNode(resrow[j]));
+      }
+     // const cellText = document.createTextNode(`cell in row ${i}, column ${j}`);
+      //cell.appendChild(cellText);
+      row.appendChild(cell);
+    }
+    tblBody.appendChild(row);
+  }
+  tbl.appendChild(tblBody);
+  document.body.appendChild(tbl);
+  tbl.setAttribute("border", "1");
+     
+     
+
+    
+}
+</script> 
+    </body>
+</html>
